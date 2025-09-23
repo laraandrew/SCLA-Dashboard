@@ -1,0 +1,27 @@
+<!doctype html>
+<html><head>
+  <meta charset="utf-8">
+  <title>{{ (car.year or '') ~ ' ' ~ (car.make or '') ~ ' ' ~ (car.model or '') }} · Sticker</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <a href="/">← Back</a>
+  <div class="detail">
+    <img src="{{ car.thumb_url or '/static/placeholder.png' }}" class="hero">
+    <div class="info">
+      <h1>{{ (car.year or '') ~ ' ' ~ (car.make or '') ~ ' ' ~ (car.model or '') }}</h1>
+      <ul>
+        <li><b>VIN</b> {{ car.vin or 'N/A' }}</li>
+        <li><b>Stock</b> {{ car.stock or 'N/A' }}</li>
+        <li><b>Odometer</b> {{ car.odometer or 'N/A' }}</li>
+        <li><b>Price</b> {{ car.price or 'N/A' }}</li>
+        <li><b>Exterior</b> {{ car.exterior or 'N/A' }}</li>
+        <li><b>Interior</b> {{ car.interior or 'N/A' }}</li>
+        <li><b>Engine</b> {{ car.engine or 'N/A' }}</li>
+        <li><b>Transmission</b> {{ car.transmission or 'N/A' }}</li>
+        <li><b>URL</b> <a href="{{ car.url }}" target="_blank">Open listing</a></li>
+      </ul>
+      <a class="button" href="/cars/{{car.id}}/sticker.png">Generate & Download Sticker</a>
+    </div>
+  </div>
+</body></html>

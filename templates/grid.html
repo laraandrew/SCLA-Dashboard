@@ -1,0 +1,30 @@
+<!doctype html>
+<html><head>
+  <meta charset="utf-8">
+  <title>Cars · Sticker Dashboard</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Cars</h1>
+    <form method="get" action="/">
+      <input type="text" name="q" placeholder="Search make, model, VIN, stock" value="{{ request.query_params.get('q','') }}">
+      <button type="submit">Search</button>
+    </form>
+    <form method="post" action="/cars" class="add-form">
+      <input type="url" name="url" placeholder="Paste listing URL" required>
+      <button type="submit">Add car</button>
+    </form>
+  </header>
+  <main class="grid">
+    {% for c in cars %}
+    <a href="/cars/{{c.id}}" class="tile">
+      <img src="{{ c.thumb_url or '/static/placeholder.png' }}" alt="thumb">
+      <div class="title">{{ (c.year or '') ~ ' ' ~ (c.make or '') ~ ' ' ~ (c.model or '') }}</div>
+      <div class="sub">{{ c.stock or c.vin or '' }}</div>
+    </a>
+    {% else %}
+    <p>No cars yet. Paste a listing URL above.</p>
+    {% endfor %}
+  </main>
+</body></html>
