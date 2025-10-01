@@ -1,0 +1,8 @@
+[project]
+name = "scla-worker"
+version = "0.1.0"
+dependencies = [
+  "httpx",
+  "beautifulsoup4",
+  "pydantic>=2"
+]

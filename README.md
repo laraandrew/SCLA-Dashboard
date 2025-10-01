@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Sticker Dashboard (FastAPI)
 
 One-password dashboard for your dealership:
@@ -31,3 +32,24 @@ uvicorn app.main:app --reload
 - Stickers are generated on demand (no storage bloat).
 - Thumbnails are hotlinked or cached small images if needed.
 - Scraper is dealership-specific; edit `app/scraper.py` mappings as site HTML changes.
+=======
+# SportsCarLA Hub (Phase 1→3)
+
+## Quickstart
+```bash
+# From repo root
+docker compose up --build
+```
+
+- Backend API docs: http://localhost:8000/docs
+- Frontend: http://localhost:3000
+
+### Notes
+- Edit selectors in `worker/worker.py` to match actual SportscarLA inventory HTML.
+- The pricing engine is a baseline heuristic—swap with richer logic later.
+- Password gate for the dashboard is set by `DASH_PASSWORD` (see `.env.example`).
+- Write routes on the API expect `Authorization: Bearer <API_TOKEN>`.
+```bash
+curl -H "Authorization: Bearer devtoken123" http://localhost:8000/healthz
+```
+>>>>>>> 1a9f6c4 (newest front and backend implementation. intended to be easier to visualize. card expasion quirk.)
