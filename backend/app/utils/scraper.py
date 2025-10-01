@@ -104,24 +104,29 @@ def scrape_car_detail(url: str) -> Dict[str, Optional[str]]:
         "thumb": None,
     }
 
-    # hero image (best-effort)
-    hero = (soup.select_one("img#mainImage")
+    # ✅ FIX: grab first actual photo from div#photos
+    photo_a = soup.select_one("div#photos div.photo a[href]")
+    if photo_a and photo_a.get("href"):
+        data["thumb"] = urljoin(BASE, photo_a["href"])
+    else:
+        # fallback (previous logic, in case structure changes)
+        hero = (
+            soup.select_one("img#mainImage")
             or soup.select_one(".vehicle-image img")
             or soup.select_one("img.full")
-            or soup.select_one("img[src*='imagetag']"))
-    if hero and hero.get("src"):
-        src = hero["src"]
-        data["thumb"] = urljoin(BASE, src) if src.startswith("/") else src
+            or soup.select_one("img[src*='imagetag']")
+        )
+        if hero and hero.get("src"):
+            src = hero["src"]
+            data["thumb"] = urljoin(BASE, src) if src.startswith("/") else src
 
-    # Main spec blocks
+    # ---------- rest of your parsing (elm blocks, etc.) ----------
     for elm in soup.select(".elm"):
         span = elm.find("span")
         if not span:
             continue
         label = span.get_text(strip=True).rstrip(":").lower()
-        # try immediate text next to the span
         value = (span.next_sibling or "").strip() if span.next_sibling else ""
-        # fallback: full text minus label
         if not value:
             text = elm.get_text(" ", strip=True)
             value = text[len(label):].lstrip(" :\u00A0") if text.lower().startswith(label) else text
@@ -152,6 +157,7 @@ def scrape_car_detail(url: str) -> Dict[str, Optional[str]]:
             data["body_style"] = value
 
     return data
+
 
 # ---------- Persist (upsert) ----------
 
@@ -191,7 +197,6 @@ def upsert_car(session, detail: Dict[str, Optional[str]]) -> Car:
     car.price_raw = detail.get("price") or car.price_raw
     car.price = _parse_price_to_int(detail.get("price")) or car.price
     car.thumb = detail.get("thumb") or car.thumb
-    car.status = "active"  # you can adjust if you later detect sold/pending on detail page
 
     return car
 

@@ -4,7 +4,7 @@ from .db import Base, engine
 from app.db import engine, Base
 from app.models.car import Car
 from .routers import cars, services, documents, pricing, scan
-from .utils.sticker import generate_sticker
+from .routers.stickers import generate_sticker
 from . import models
 
 Base.metadata.create_all(bind=engine)

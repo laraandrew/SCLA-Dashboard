@@ -7,6 +7,42 @@ from app.utils.scraper import get_all_active_urls, scrape_urls_and_persist
 
 router = APIRouter(prefix="/scan", tags=["scan"])
 
+@router.get("/car")
+def get_car_by_url(url: str):
+    db: Session = SessionLocal()
+    try:
+        car = db.query(Car).filter_by(url=url).one_or_none()
+        if not car:
+            return {"error": "not found"}
+        return {
+            "id": car.id,
+            "url": car.url,
+            "stock": car.stock,
+            "vin": car.vin,
+            "year": car.year,
+            "make": car.make,
+            "model": car.model,
+            "body_style": car.body_style,
+            "exterior_color": car.exterior_color,
+            "interior_color": car.interior_color,
+            "miles": car.miles,
+            "transmission": car.transmission,
+            "engine": car.engine,
+            "price": car.price,
+            "price_raw": car.price_raw,
+            "thumb": car.thumb,
+            "status": car.status,
+        }
+    finally:
+        db.close()
+
+from app.utils.scraper import scrape_car_detail
+
+@router.get("/detail")
+def scrape_detail(url: str):
+    return scrape_car_detail(url)
+
+
 @router.get("/urls")
 def scan_urls(limit: int = Query(36, ge=12, le=100), pages: int = Query(20, ge=1, le=50)):
     return get_all_active_urls(limit=limit, max_pages=pages)
