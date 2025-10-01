@@ -110,7 +110,7 @@ export default async function CarPage({
               style={{
                 padding: "10px 14px",
                 borderRadius: 10,
-                background: "#111827",
+                background: "#29292aff",
                 color: "white",
                 textDecoration: "none",
                 fontWeight: 700,
