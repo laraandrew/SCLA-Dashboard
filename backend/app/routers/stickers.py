@@ -54,18 +54,20 @@ def _text_or_na(value: Optional[str]) -> str:
     v = (value or "").strip()
     return v if v else "Not Available"
 
-def _shrink_to_fit(draw: ImageDraw.ImageDraw, text: str, max_width: int, start_font_size: int) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
-    """Return a font that ensures `text` fits in `max_width` (never < 10px)."""
-    size = start_font_size
-    font = _load_font(size)
-    while size > 10:
+def _shrink_to_fit(draw: ImageDraw.ImageDraw, text: str, max_width: int, initial_size: int) -> ImageFont.FreeTypeFont:
+    """
+    Returns a FreeTypeFont that is reduced in size until the text fits within max_width.
+    Won't shrink below size 10.
+    """
+    size = max(int(initial_size or 1), 10)
+    while True:
+        font = _load_font(size)
         bbox = draw.textbbox((0, 0), text, font=font)
-        w = bbox[2] - bbox[0]
-        if w <= max_width:
+        width = bbox[2] - bbox[0]
+        if width <= max_width or size <= 10:
             return font
         size -= 1
-        font = _load_font(size)
-    return font
+
 
 def _generate_sticker_bytes(data: dict) -> bytes:
     """Draw values onto the template exactly per your coordinates and return PNG bytes."""
@@ -81,7 +83,7 @@ def _generate_sticker_bytes(data: dict) -> bytes:
     draw = ImageDraw.Draw(img)
 
     # 2) Fonts (base sizes; will shrink for long strings)
-    font_small = _load_font(28)
+    font_small = _load_font(32)  # start a bit larger; shrink-to-fit will handle long lines
     font_price = _load_font(70)
 
     # 3) Field coordinates (your exact map)
@@ -114,11 +116,11 @@ def _generate_sticker_bytes(data: dict) -> bytes:
         "vin": 680,
 
         "mileage": 300,
-        "engine": 650,
-        "trans": 650,
+        "engine": 300,
+        "trans": 300,
 
-        "exterior_color": 650,
-        "interior_color": 650,
+        "exterior_color": 300,
+        "interior_color": 300,
         "stock": 650,
 
         "price": 450,  # big, but keep consistent with visual
