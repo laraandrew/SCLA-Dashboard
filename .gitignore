@@ -7,3 +7,17 @@ data/
 
 # dependencies
 node_modules/
+
+# dependencies
+node_modules/
+*.log
+
+# build
+.next/
+dist/
+__pycache__/
+*.pyc
+
+# env
+.env
+.venv/
