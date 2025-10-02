@@ -1,55 +1,109 @@
-<<<<<<< HEAD
-# Sticker Dashboard (FastAPI)
+SCLA Dashboard
 
-One-password dashboard for your dealership:
-- Grid of cars (thumbnail + title).
-- Detail view with fields.
-- **Generate & Download Sticker** button (on demand).
-- Paste listing URL to add a new car.
+A full-stack dashboard that transforms messy dealership inventory into a structured, user-friendly system. Built to show how technical execution and product thinking combine: from understanding business needs, to designing data pipelines, to presenting clean insights and customer-ready outputs.
 
-## Quick start (local)
+✨ What Problem It Solves
 
-```bash
-python -m venv .venv && source .venv/bin/activate
+SportscarLA, a classic car dealership, had their inventory buried inside static HTML pages with no easy way to:
+
+See all listings in one place
+
+Standardize details like VINs, colors, and prices
+
+Generate marketing assets (stickers) without manual Photoshop work
+
+The pain points were clear: time wasted, inconsistent information, and no scalable workflow.
+
+🛠 The Solution
+
+This project delivers an end-to-end product pipeline:
+
+Scraping Layer – Automatically pulls all live inventory from the dealership site. Handles pagination, avoids duplicate entries, and normalizes data.
+
+Database & API – Stores vehicles in a structured format (year, make, model, VIN, colors, price, etc.). Exposed via a FastAPI backend with clean, documented endpoints.
+
+Frontend Dashboard – Next.js UI that allows easy browsing, filtering, and detail expansion of every car listing.
+
+Sticker Generator – One-click “Generate Sticker” button that produces a pixel-perfect PNG sticker with pricing, key details, and a QR code to the live listing.
+
+🚗 Why This Matters (Product Lens)
+
+For the business: saves hours of manual data entry and design work, while ensuring accuracy in every listing.
+
+For customers: creates a polished, consistent, and trustworthy presentation of cars.
+
+For scale: the same framework could support multiple dealerships, e-commerce storefronts, or marketplaces.
+
+⚙️ Tech Stack (Execution)
+
+Backend: FastAPI, SQLAlchemy, BeautifulSoup, lxml, Pillow, qrcode
+
+Frontend: Next.js, React
+
+Database: SQLite (swappable for Postgres)
+
+Infra: Built for local dev now, designed with portability for cloud
+
+🚀 Getting Started
+
+Backend
+
+cd backend
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
-export APP_PASSWORD="changeme"
-export SESSION_SECRET="$(python -c 'import secrets;print(secrets.token_hex(32))')"
-uvicorn app.main:app --reload
-# open http://127.0.0.1:8000/login
-```
+uvicorn app.main:app --reload --port 8000
 
-## Deploy on Render (recommended)
-- Create a new Web Service from this repo.
-- Render will use `render.yaml` automatically.
-- Set/rotate **APP_PASSWORD** and **SESSION_SECRET** in the dashboard.
-- A small persistent disk is configured for SQLite.
 
-## Env vars
-- `APP_PASSWORD` – the single shared password for login.
-- `SESSION_SECRET` – random 32+ char string to sign cookies.
+API Docs: http://127.0.0.1:8000/docs
 
-## Notes
-- Stickers are generated on demand (no storage bloat).
-- Thumbnails are hotlinked or cached small images if needed.
-- Scraper is dealership-specific; edit `app/scraper.py` mappings as site HTML changes.
-=======
-# SportsCarLA Hub (Phase 1→3)
+Endpoints of note:
 
-## Quickstart
-```bash
-# From repo root
-docker compose up --build
-```
+/scan/urls – live inventory URLs
 
-- Backend API docs: http://localhost:8000/docs
-- Frontend: http://localhost:3000
+/scan/cars-db – structured car dataset
 
-### Notes
-- Edit selectors in `worker/worker.py` to match actual SportscarLA inventory HTML.
-- The pricing engine is a baseline heuristic—swap with richer logic later.
-- Password gate for the dashboard is set by `DASH_PASSWORD` (see `.env.example`).
-- Write routes on the API expect `Authorization: Bearer <API_TOKEN>`.
-```bash
-curl -H "Authorization: Bearer devtoken123" http://localhost:8000/healthz
-```
->>>>>>> 1a9f6c4 (newest front and backend implementation. intended to be easier to visualize. card expasion quirk.)
+/scan/detail?url=... – scrape any detail page
+
+/stickers/generate?url=... – download PNG sticker
+
+Frontend
+cd frontend
+npm install
+echo "NEXT_PUBLIC_API_URL=http://127.0.0.1:8000" > .env.local
+npm run dev
+
+
+Open http://localhost:3000
+
+📊 My Role
+
+Product Research: Identified dealership workflow pain points
+
+Solution Design: Defined pipeline from ingestion → data model → frontend → marketing asset
+
+Tech Execution: Implemented scraper, API, database, frontend, and sticker generator
+
+Product Thinking: Optimized for user experience (single click sticker generation, clean card expansion, intuitive data presentation)
+
+🌟 Takeaways
+
+This project demonstrates:
+
+How to bridge business problems and technical execution
+
+A focus on end users (dealership staff & customers) rather than just code correctness
+
+The ability to own a product lifecycle: ideation → MVP → iteration
+
+📈 Next Steps
+
+Add analytics to measure sticker usage and page views
+
+Support multiple dealerships as clients
+
+Explore cloud deployment and scaling
+
+License
+
+MIT
