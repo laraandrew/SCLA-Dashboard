@@ -1,53 +1,51 @@
-SCLA Dashboard
+SCLA Dashboard 🚗📊
 
-A full-stack dashboard that transforms messy dealership inventory into a structured, user-friendly system. Built to show how technical execution and product thinking combine: from understanding business needs, to designing data pipelines, to presenting clean insights and customer-ready outputs.
+A full-stack dashboard built for SportscarLA, a classic car dealership — designed to show how product strategy and technical execution come together to transform messy workflows into a streamlined, scalable system.
 
-✨ What Problem It Solves
+✨ The Problem
 
-SportscarLA, a classic car dealership, had their inventory buried inside static HTML pages with no easy way to:
+SportscarLA’s inventory was buried in static HTML pages:
 
-See all listings in one place
+No single view of all listings.
 
-Standardize details like VINs, colors, and prices
+Details like VINs, colors, and prices were inconsistent.
 
-Generate marketing assets (stickers) without manual Photoshop work
+Marketing assets (stickers) were created manually in Photoshop — slow, error-prone, and impossible to scale.
 
-The pain points were clear: time wasted, inconsistent information, and no scalable workflow.
+This cost the business time, accuracy, and customer trust.
 
 🛠 The Solution
 
-This project delivers an end-to-end product pipeline:
+I built an end-to-end product pipeline that:
 
-Scraping Layer – Automatically pulls all live inventory from the dealership site. Handles pagination, avoids duplicate entries, and normalizes data.
+Scrapes & Normalizes Data: Pulls live inventory automatically, de-duplicates, and standardizes attributes.
 
-Database & API – Stores vehicles in a structured format (year, make, model, VIN, colors, price, etc.). Exposed via a FastAPI backend with clean, documented endpoints.
+Structured API & Database: Centralizes data into a clean model (year, make, model, VIN, colors, price, etc.), accessible through FastAPI.
 
-Frontend Dashboard – Next.js UI that allows easy browsing, filtering, and detail expansion of every car listing.
+User-Friendly Dashboard (Next.js): Lets staff quickly browse, filter, and expand vehicle details.
 
-Sticker Generator – One-click “Generate Sticker” button that produces a pixel-perfect PNG sticker with pricing, key details, and a QR code to the live listing.
+Sticker Generator (One-Click): Produces pixel-perfect, branded PNG stickers with pricing, car details, and QR codes — no manual design needed.
 
-🚗 Why This Matters (Product Lens)
+🚗 Why It Matters (Product Lens)
 
-For the business: saves hours of manual data entry and design work, while ensuring accuracy in every listing.
+For the Business: Cuts hours of manual entry, eliminates inconsistencies, and enables faster marketing output.
 
-For customers: creates a polished, consistent, and trustworthy presentation of cars.
+For Customers: Creates polished, trustworthy, and standardized car listings.
 
-For scale: the same framework could support multiple dealerships, e-commerce storefronts, or marketplaces.
+For Scale: Provides a repeatable framework that can be extended to multiple dealerships or marketplaces.
 
-⚙️ Tech Stack (Execution)
+⚙️ Tech Stack
 
 Backend: FastAPI, SQLAlchemy, BeautifulSoup, lxml, Pillow, qrcode
 
-Frontend: Next.js, React
+Frontend: Next.js (React)
 
-Database: SQLite (swappable for Postgres)
+Database: SQLite (swappable with Postgres)
 
-Infra: Built for local dev now, designed with portability for cloud
+Infra: Local dev now, portable to cloud
 
-🚀 Getting Started
-
+🚀 Quick Start
 Backend
-
 cd backend
 python3 -m venv venv
 source venv/bin/activate
@@ -57,15 +55,15 @@ uvicorn app.main:app --reload --port 8000
 
 API Docs: http://127.0.0.1:8000/docs
 
-Endpoints of note:
+Key endpoints:
 
-/scan/urls – live inventory URLs
+/scan/urls → Live inventory URLs
 
-/scan/cars-db – structured car dataset
+/scan/cars-db → Structured car dataset
 
-/scan/detail?url=... – scrape any detail page
+/scan/detail?url=... → Scrape any detail page
 
-/stickers/generate?url=... – download PNG sticker
+/stickers/generate?url=... → Download PNG sticker
 
 Frontend
 cd frontend
@@ -78,32 +76,32 @@ Open http://localhost:3000
 
 📊 My Role
 
-Product Research: Identified dealership workflow pain points
+Product Research: Shadowed dealership workflows to uncover bottlenecks.
 
-Solution Design: Defined pipeline from ingestion → data model → frontend → marketing asset
+Solution Design: Defined a clear pipeline from raw HTML → clean data model → frontend → marketing asset.
 
-Tech Execution: Implemented scraper, API, database, frontend, and sticker generator
+Execution: Delivered scraper, API, DB, UI, and sticker generator.
 
-Product Thinking: Optimized for user experience (single click sticker generation, clean card expansion, intuitive data presentation)
+Product Thinking: Focused on usability — one-click stickers, intuitive card expansion, and clean insights.
 
-🌟 Takeaways
+🌟 What This Demonstrates
 
-This project demonstrates:
+End-to-end product ownership: from ideation → MVP → iteration.
 
-How to bridge business problems and technical execution
+Bridging tech & business needs: translating pain points into scalable tools.
 
-A focus on end users (dealership staff & customers) rather than just code correctness
+User-centric mindset: designed for dealership staff & customers, not just engineers.
 
-The ability to own a product lifecycle: ideation → MVP → iteration
+Scalability vision: architecture ready for multi-dealer expansion.
 
 📈 Next Steps
 
-Add analytics to measure sticker usage and page views
+Add analytics to measure sticker usage and listing engagement.
 
-Support multiple dealerships as clients
+Multi-dealer support for wider client adoption.
 
-Explore cloud deployment and scaling
+Explore cloud deployment for scale.
 
-License
+📜 License
 
 MIT
